@@ -1,0 +1,140 @@
+﻿@model Contacts.Models.Contact
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<div class="row">
+    <div class="col-lg-6">
+        <h4>Contact</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.FirstName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.LastName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PhoneNumber)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PhoneNumber)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Address)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.City)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.City)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.State)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.State)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Country)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Country)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.PostalCode)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.PostalCode)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="col-lg-6">
+        <div id="map" style="height: 500px;"></div>
+
+    </div>
+</div>
+
+
+
+<div class="col-lg-6">
+    <div id="map-canvas"></div>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+
+
+
+<script>
+    var map = L.map('map').setView([0, 0], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    }).addTo(map);
+    var FirstName = '@Model.FirstName'; // Replace with your desired pin code
+    var LastName = '@Model.LastName'; // Replace with your desired pin code
+    var Address = '@Model.Address'; // Replace with your desired pin code
+    var City = '@Model.City'; // Replace with your desired pin code
+    var State = '@Model.State'; // Replace with your desired pin code
+    var Country = '@Model.Country'; // Replace with your desired pin code
+    var PostalCode = '@Model.PostalCode'; // Replace with your desired pin code
+    var PhoneNumber = '@Model.PhoneNumber'; // Replace with your desired pin code
+    var Email = '@Model.Email'; // Replace with your desired pin code
+
+
+    var pinCode = @Model.PostalCode; // Replace with your desired pin code
+    var geocodeUrl = "https://nominatim.openstreetmap.org/search?format=json&q=" + PostalCode + "," + Country;
+    fetch(geocodeUrl).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+        var lat = json[0].lat;
+        var lng = json[0].lon;
+
+        var popup = '<b>Name:</b> ' + FirstName + ' ' + LastName +
+                    '<br/><b>Address:</b> ' + Address + ',</br>' + City + ',</br>' + State + ',</br>' + Country + '-' + PostalCode + ',' +
+                    '<br/><b>Phone:</b> '  +PhoneNumber +
+                    '<br/><b>Email:</b> '  +Email;
+
+        var marker = L.marker([lat, lng]).bindPopup(popup).addTo(map);
+        map.setView([lat, lng], 13);
+    });
+</script>

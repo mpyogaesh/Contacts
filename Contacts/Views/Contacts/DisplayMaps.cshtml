@@ -1,0 +1,50 @@
+﻿@model  List<Contacts.Models.MapViewModel>
+
+@{
+    ViewBag.Title = "DisplayMaps";
+}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<div id="map" style="height: 500px;"></div>
+
+
+<script type="text/javascript">
+    var map = L.map('map').setView([0, 0], 13);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+        maxZoom: 18,
+    }).addTo(map);
+</script>
+
+@foreach (var mapmodel in Model)
+{
+    <script type="text/javascript">
+        var FirstName = '@mapmodel.FirstName'; // Replace with your desired pin code
+    var LastName = '@mapmodel.LastName'; // Replace with your desired pin code
+    var Address = '@mapmodel.Address'; // Replace with your desired pin code
+    var City = '@mapmodel.City'; // Replace with your desired pin code
+    var State = '@mapmodel.State'; // Replace with your desired pin code
+    var Country = '@mapmodel.Country'; // Replace with your desired pin code
+    var PostalCode = '@mapmodel.PostalCode'; // Replace with your desired pin code
+    var PhoneNumber = '@mapmodel.PhoneNumber'; // Replace with your desired pin code
+    var Email = '@mapmodel.Email'; // Replace with your desired pin code
+
+        var geocodeUrl = "https://nominatim.openstreetmap.org/search?format=json&q=" + PostalCode + "," + Country;
+        fetch(geocodeUrl).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            var lat = json[0].lat;
+            var lng = json[0].lon;
+            var popup = '<b>Name:</b> ' + FirstName + ' ' + LastName +
+                '<br/><b>Address:</b> ' + Address + ',</br>' + City + ',</br>' + State + ',</br>' + Country + '-' + PostalCode + ',' +
+                '<br/><b>Phone:</b> ' + PhoneNumber +
+                '<br/><b>Email:</b> ' + Email;
+
+            var marker = L.marker([lat, lng]).bindPopup(popup).addTo(map);
+            map.setView([lat, lng], 13);
+        });
+
+      
+    </script>
+}
+

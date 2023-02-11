@@ -1,0 +1,65 @@
+﻿@model IEnumerable<Contacts.Models.Contact>
+
+@{
+    ViewBag.Title = "Manage Contacts";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+
+    @Html.ActionLink("Create New", "Create", "Contacts", new { @class = "btn btn-success btn-md" })
+</p>
+
+<br />
+<br />
+
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-striped table-hover sortable">
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="10">No Record's found.</td>
+            </tr>
+
+        }
+        else
+        {
+            <thead>
+                <tr class="danger">
+                    <th data-defaultsort="ZA">Contact ID</th>
+                    <th data-defaultsign="AZ">FirstName</th>
+                    <th data-defaultsign="AZ">LastName</th>
+                    <th data-defaultsign="AZ">Email</th>
+                    <th data-defaultsign="AZ">PhoneNumber</th>
+                    <th data-defaultsign="AZ">Address</th>
+                    <th data-defaultsign="AZ">City</th>
+                    <th data-defaultsign="AZ">State</th>
+                    <th data-defaultsign="AZ">Country</th>
+                    <th data-defaultsign="AZ">PostalCode</th>
+                </tr>
+            </thead>
+            foreach (var item in Model)
+            {
+    <tr>
+        <td>@item.Id</td>
+        <td>@item.FirstName</td>
+        <td>@item.LastName</td>
+        <td>@item.Email</td>
+        <td>@item.PhoneNumber</td>
+        <td>@item.Address</td>
+        <td>@item.City</td>
+        <td>@item.State</td>
+        <td>@item.Country</td>
+        <td>@item.PostalCode</td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+        </td>
+    </tr>
+
+            }
+        }
+    </table>
+</div>
