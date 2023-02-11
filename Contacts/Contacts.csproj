@@ -164,7 +164,6 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Area\ContactsController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -225,6 +224,7 @@
     <Content Include="Models\Contact.edmx.diagram">
       <DependentUpon>Contact.edmx</DependentUpon>
     </Content>
+    <Content Include="App_Data\Readme Document.docx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -251,8 +251,6 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Contacts\Create.cshtml" />
     <Content Include="Views\Contacts\Delete.cshtml" />
     <Content Include="Views\Contacts\Details.cshtml" />
